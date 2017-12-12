@@ -1,7 +1,11 @@
 package krescent.com.mvpsample;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
+
+import java.io.IOException;
 
 import krescent.com.mvpsample.LoginModel.UserData;
 import okhttp3.ResponseBody;
@@ -17,7 +21,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class LoginPresenter {
     private LoginContract.View view;
-    private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
+    private static final String BASE_URL = "https://jsonplaceholder.typicode.com/";
 
     LoginPresenter(LoginContract.View view) {
         this.view = view;
@@ -46,12 +50,16 @@ public class LoginPresenter {
         call.enqueue(new Callback<UserData>() {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
+
                 view.hideLoader();
-                view.showUserPost(response.body());
+                Log.d("TAG", "dfsd");
+
+                //view.showUserPost(response.body());
             }
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
+                Log.d("TAG=", t.getLocalizedMessage());
                 view.hideLoader();
                 view.showErrorMessage();
             }
