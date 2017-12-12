@@ -19,15 +19,21 @@ public class LoginPresenter {
     private LoginContract.View view;
     private static final String BASE_URL = "https://jsonplaceholder.typicode.com";
 
-    public LoginPresenter(LoginContract.View view) {
+    LoginPresenter(LoginContract.View view) {
         this.view = view;
     }
 
-    public void validateField() {
+    void validateField() {
+        if (view.getUserid().isEmpty()) {
+            view.showEmptyFieldError();
+        } else {
+            getUserData(view.getUserid());
+        }
 
     }
 
-    public void getUserData(String userId) {
+    private void getUserData(String userId) {
+
         view.showLoader();
 
         Retrofit retrofit = new Retrofit.Builder().
@@ -41,11 +47,13 @@ public class LoginPresenter {
             @Override
             public void onResponse(Call<UserData> call, Response<UserData> response) {
                 view.hideLoader();
+                view.showUserPost(response.body());
             }
 
             @Override
             public void onFailure(Call<UserData> call, Throwable t) {
-
+                view.hideLoader();
+                view.showErrorMessage();
             }
         });
     }

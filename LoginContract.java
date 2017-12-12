@@ -7,17 +7,24 @@ import retrofit2.http.GET;
 import retrofit2.http.Query;
 
 /**
- * Created by sys-roid on 11/12/17.
+ * Contract contain the interface method whether related to view ,webservice and action etc.
+ * Implemented in LoginActivity and call from loginPresenter class
  */
-
-public class LoginContract {
+class LoginContract {
 
     public interface View {
+
         void showLoader();
 
         void hideLoader();
 
-        void getUserId(UserData data);
+        void showUserPost(UserData data);
+
+        void showEmptyFieldError();
+
+        String getUserid();
+
+        void showErrorMessage();
 
     }
 
